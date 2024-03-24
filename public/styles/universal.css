@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.25s ease-in-out;
+  background-position:center center;
+  background-repeat: no-repeat no-repeat;
+  background-size: cover;
+  text-align: center;
+  border-width: 0;
+  text-transform: uppercase;
+  font-family: "Nunito", sans-serif;
+}
+:root{
+  --back:#ffffff65;
+  --text:#000000;
+  --fore: #2c2c2c59;
+  --back-solid:#ffffff;
+  --fore-solid: #2c2c2c;
+}
+input:focus,textarea:focus{
+  outline: 0 solid transparent;
+}

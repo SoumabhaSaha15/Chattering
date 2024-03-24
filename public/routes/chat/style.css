@@ -1,0 +1,56 @@
+body{
+  background-image: url('../../icons/background.jpg');
+  & div#root{
+    min-height: 100lvh;
+    max-height: 100lvh;
+    border-radius: 10px;
+    background-color: var(--back);
+    backdrop-filter: blur(2px);
+    display: grid;
+    place-items: center;
+    grid-template-rows: 6lvh 88lvh 6lvh;
+    transform: scale(0.85);
+    
+    & header{
+      position: relative;
+      height: 100%;
+      width: 100%;
+      line-height: 6lvh;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text);
+      transition: transform 0.25s linear;
+    }
+    & main{
+      height: 100%;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      & form{
+        height: 80%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        & input,button{
+          background-color: var(--back);
+          border-radius: 10px;
+          height: 8lvh;
+          width: 60%;
+          font-weight: 900;
+          font-size: 1.5rem;
+        }
+        
+      }
+    }
+    & footer{
+      height: 100%;
+      width: 100%;
+      line-height: 6lvh;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+  }  
+}

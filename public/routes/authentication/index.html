@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../styles/universal.css">
+  <link rel="stylesheet" href="./routes/authentication/style.css">
+  <link rel="icon" href="../../icons/chat-icon.svg">
+  <script src="./routes/authentication/script.js" defer></script>
+  <title>chatt-app</title>
+</head>
+
+<body>
+  <div id="root">
+    <dialog id="message">
+      <textarea readonly></textarea>
+      <button id="close-div">CLOSE</button>
+    </dialog>
+    <header>
+      authentication
+    </header>
+    <main>
+      <form method="post" name="authentication" autocomplete="on" accept-charset="ASCII">
+        <span class="toggle-btn" id="toggler" state="signup">
+          <button type="button" name="signup">signup</button>
+          <button type="button" name="login">login</button>
+        </span>
+        <input type="text" placeholder="name" name="UserName" pattern="^\D[a-zA-Z ]{2,}$" required />
+        <input type="email" placeholder="email" name="Email" required />
+        <input type="password" placeholder="password (8 charecter)" name="Password"
+          pattern="^[a-zA-Z0-9!@#$%^&*]{8,16}$" required />
+        <input type="submit" value="signup" name="Purpose" required>
+      </form>
+    </main>
+    <footer>dev:soumabha&nbsp;saha</footer>
+  </div>
+</body>
+
+</html>
