@@ -9,8 +9,9 @@
   background-size: cover;
   text-align: center;
   border-width: 0;
-  text-transform: uppercase;
+  text-transform: none;
   font-family: "Nunito", sans-serif;
+  text-overflow: ellipsis;
 }
 :root{
   --back:#ffffff65;

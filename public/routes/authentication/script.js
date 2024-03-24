@@ -28,8 +28,9 @@
     SIGNUP.style.backgroundColor = 'var(--fore)';
     SUBMIT.value = TOGGLER.state;
   });
-
+  
   SIGNUP.click();
+  
   FORM.onsubmit = (e) => {
     e.preventDefault();
     let Data = [...FORM.querySelectorAll('input[required][name]')].reduce((data, item) => {
@@ -43,7 +44,7 @@
     })
       .then(res => res.json())
       .then(data=>{
-        console.log(data);
+        // console.log(data);
         if(data.hasOwnProperty('err_msg')){
           DIALOG.style.display = 'grid';
           DIALOG.querySelector('textarea[readonly]').textContent = data['err_msg']; 
