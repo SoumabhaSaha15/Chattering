@@ -49,6 +49,8 @@
           DIALOG.style.display = 'grid';
           DIALOG.querySelector('textarea[readonly]').textContent = data['err_msg']; 
           DIALOG.showModal();
+        }else{
+          window.location.pathname = data['redirect'];
         };
       })
       .catch(console.error);

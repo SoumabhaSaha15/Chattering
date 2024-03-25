@@ -1,6 +1,7 @@
-body{
+body {
   background-image: url('../../icons/background.jpg');
-  & div#root{
+
+  & div#root {
     min-height: 100lvh;
     max-height: 100lvh;
     border-radius: 10px;
@@ -10,44 +11,57 @@ body{
     place-items: center;
     grid-template-rows: 6lvh 88lvh 6lvh;
     transform: scale(0.85);
-    & dialog{
-      width: 60%;
-      height: 60%;
+
+    & dialog {
+      padding: 10px;
+      width: 300px;
+      max-height: 400px;
+      min-height: max-content;
       border-radius: 10px;
       /* display: grid; */
       place-items: center;
       top: 50%;
       left: 50%;
       transform: translate(-50%,-50%);
-      grid-template-rows: 80% 20%;
+      grid-template-rows: calc(80% - 5px) calc(20% - 5px);
       grid-auto-columns: 100%;
-      background-color: var(--fore);
-      & textarea{
+      gap:10px;
+      
+      background-color: #303030;
+      & textarea {
         text-transform: none;
-        height: 80%;
-        width: 80%;
+        height: 200px;
+        width: 100%;
         border: 0 solid transparent;
         resize: none;
         background-color: var(--back);
         border-radius: 10px;
+        font-weight: 600;
         color: red;
+        font-size: 20px;
+        text-align: start;
+        word-break: break-all;
+        padding: 4px;
       }
-      & button{
+      & button {
         border: 0 solid transparent;
         resize: none;
         background-color: var(--back);
         font-size: large;
         color: red;
         font-weight: 900;
+        width: 100%;
         padding: 10px;
         border-radius: 10px;
       }
     }
-    & dialog[open]::backdrop{
+
+    & dialog[open]::backdrop {
       background-color: #000000d0;
       opacity: 1;
     }
-    & header{
+
+    & header {
       position: relative;
       height: 100%;
       width: 100%;
@@ -57,19 +71,22 @@ body{
       color: var(--text);
       transition: transform 0.25s linear;
     }
-    & main{
+
+    & main {
       height: 100%;
       width: 100%;
       display: grid;
       place-items: center;
-      & form{
+
+      & form {
         height: 80%;
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        & span.toggle-btn{
+
+        & span.toggle-btn {
           background-color: var(--back);
           border-radius: 10px;
           height: 8lvh;
@@ -78,21 +95,26 @@ body{
           font-size: 1.5rem;
           display: grid;
           place-items: center;
-          grid-template-columns: repeat(auto-fill,50%);
+          grid-template-columns: repeat(auto-fill, 50%);
           grid-auto-rows: 100%;
-          & button{
+
+          & button {
             height: 100%;
             width: 100%;
             background-color: var(--fore);
           }
-          & button:first-child{
+
+          & button:first-child {
             border-radius: 10px 0 0 10px;
           }
-          & button:last-child{
+
+          & button:last-child {
             border-radius: 0 10px 10px 0;
-          } 
+          }
         }
-        & input,button{
+
+        & input,
+        button {
           background-color: var(--back);
           border-radius: 10px;
           height: 8lvh;
@@ -100,19 +122,23 @@ body{
           font-weight: 900;
           font-size: 1.5rem;
         }
-        & input[type="submit"]{
+
+        & input[type="submit"] {
           font-size: 1.5rem;
         }
-        & input[type="submit"]:hover{
+
+        & input[type="submit"]:hover {
           background-color: #000000c0;
           color: #ffffff;
         }
-        & input:invalid{
+
+        & input:invalid {
           color: red;
         }
       }
     }
-    & footer{
+
+    & footer {
       height: 100%;
       width: 100%;
       line-height: 6lvh;
@@ -120,5 +146,5 @@ body{
       font-weight: 900;
       color: var(--text);
     }
-  }  
+  }
 }
