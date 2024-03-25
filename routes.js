@@ -16,7 +16,7 @@ const ROUTES = {
      * @param {express.Request} request 
      * @param {express.Response} response 
      */
-    home:(request,response)=>{
+    home:async(request,response)=>{
       response.sendFile(__dirname+'/public/routes/home/index.html');
     },
     /**
@@ -24,7 +24,7 @@ const ROUTES = {
      * @param {express.Request} request 
      * @param {express.Response} response 
      */
-    authentication:(request,response)=>{
+    authentication:async (request,response)=>{
       response.sendFile(__dirname+'/public/routes/authentication/index.html');
     }
   },
@@ -34,7 +34,7 @@ const ROUTES = {
      * @param {express.Request} req 
      * @param {express.Response} res 
      */
-    home:(request,response)=>{
+    home:async(request,response)=>{
       response.send('{"message":"only get request"}')
     },
     /**
@@ -42,7 +42,7 @@ const ROUTES = {
      * @param {express.Request} request 
      * @param {express.Response} response 
      */
-    authentication:(request,response)=>{
+    authentication:async (request,response)=>{
       let Data = {...request.body};
       let Keys = Object.keys(models.UserSchema.paths).filter((fieldName)=>(fieldName !== '_id' && fieldName !== '__v'));
       if(Data.Purpose == 'signup'){
@@ -54,18 +54,18 @@ const ROUTES = {
         Document.save().then(item=>{
           let SavedData = JSON.parse(JSON.stringify(item));
           delete SavedData['__v'];
-          response.cookie("user_token",JWT.sign(SavedData,process.env.SECRET_KEY),{
+          response.cookie("user_token",JWT.sign(SavedData['_id'],process.env.SECRET_KEY),{
             httpOnly:true
           });
-          response.clearCookie('_id',{httpOnly:true});
           response.send(JSON.stringify(SavedData));
         }).catch(err=>{
           response.status(400).send(JSON.stringify({err_msg:err.message}));
           console.error(err.message);
         });
       }else if(Data.Purpose == 'login'){
-        console.log(JWT.verify(request.cookies["user_token"],process.env.SECRET_KEY));
-        response.send({...request.cookies["user_token"]});
+        let x = await models.UserModel.findById(JWT.verify(request.cookies["user_token"],process.env.SECRET_KEY))
+        x = JSON.parse(JSON.stringify(x));
+        response.send(x);
       }
       
     }

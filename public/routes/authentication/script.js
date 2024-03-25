@@ -44,7 +44,7 @@
     })
       .then(res => res.json())
       .then(data=>{
-        // console.log(data);
+        console.log(data);
         if(data.hasOwnProperty('err_msg')){
           DIALOG.style.display = 'grid';
           DIALOG.querySelector('textarea[readonly]').textContent = data['err_msg']; 
