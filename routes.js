@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import {Server} from 'socket.io';
 import mongoose from "mongoose";
 import path from 'path';
@@ -8,7 +8,8 @@ import JWT from 'jsonwebtoken';
 import dotenv  from "dotenv";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+import Global from "./global.js";
+import { request } from "http";
 const ROUTES = {
   GET:{
     /**
@@ -34,6 +35,14 @@ const ROUTES = {
      */
     chat:async (request,response)=>{
       response.sendFile(__dirname+'/public/routes/chat/index.html');
+    },
+    /**
+    * brings to settings page
+    * @param {express.Request} request 
+    * @param {express.Response} response 
+    */
+    settings:async (request,response) => {
+      response.sendFile(__dirname+'/public/routes/settings/index.html');
     }
   },
   POST:{
@@ -51,26 +60,11 @@ const ROUTES = {
      * @param {express.Response} response 
      */
     authentication:async (request,response)=>{
-      /**
-       * @param {string} token
-       * @returns {string}
-       */
-      const parseJWT = (token) => (JWT.verify(request.cookies[token],process.env.SECRET_KEY));
-      /**
-       * @param {string[]} keys
-       * @param {object} data
-       * @returns {object}
-       */
-      const filterDataObject = (keys,data) => {
-        let newData = {};
-        (keys.reduce((accumulator,currunt) => {newData[currunt] = data[currunt]},""));
-        return newData;
-    };
       let Data = {...request.body};
       let Keys = Object.keys(models.UserSchema.paths).filter((fieldName)=>(fieldName !== '_id' && fieldName !== '__v'));
       if(Data?.Purpose == 'signup'){
         try{  
-          let Document = new models.UserModel(filterDataObject(Keys,Data));
+          let Document = new models.UserModel(Global.setObjectKeys(Keys,Data));
           let SavedData = JSON.parse(JSON.stringify(await Document.save()));
           response.cookie("user_token",JWT.sign(SavedData['_id'],process.env.SECRET_KEY),{httpOnly:true});
           response.send(JSON.stringify({'redirect':'./chat'}));
@@ -79,26 +73,52 @@ const ROUTES = {
         }  
       }else if(Data?.Purpose == 'login'){
         try{
-          let data = await models.UserModel.exists({_id:parseJWT("user_token")})
-          let FilteredData = filterDataObject(Keys,JSON.parse(JSON.stringify(await models.UserModel.findOne(data))));
-          FilteredData['UserName'] = FilteredData['UserName']?.toUpperCase();
-          (JSON.stringify(FilteredData)==JSON.stringify(filterDataObject(Keys,Data)))?
-          (response.send(JSON.stringify({'redirect':'./chat'}))):
-          (response.send(JSON.stringify({'redirect':'./authentication'})));
+          let data = await models.UserModel.exists({_id:Global.parseJWT("user_token",request.cookies)});
+          if(data){
+            let FilteredData = Global.setObjectKeys(Keys,Global.getRecords(await models.UserModel.findOne(data)));
+            Data = Global.setObjectKeys(Keys,Data);
+            Data['UserName'] = Data['UserName']?.toUpperCase();
+            if(JSON.stringify(FilteredData)==JSON.stringify(Global.setObjectKeys(Keys,Data)))
+              response.send(JSON.stringify({'redirect':'./chat'}));
+            else
+              throw new Error('invalid login credential signup first');
+          }else{
+            throw new Error('invalid login credential signup first');
+          }
         }catch(err){
-          response.send(err);
+          response.status(400).send(JSON.stringify({err_msg:err.message}));
         }
       }
-      
     },
     /**
-     * Manages users entry and login
+     * sends user data to chat route
      * @param {express.Request} request 
      * @param {express.Response} response 
      */
     chat:async(request,response)=>{
-
-    }
+      let Keys = Object.keys(models.UserSchema.paths).filter((fieldName)=>(fieldName !== '_id' && fieldName !== '__v'));
+      try{
+        let data = await models.UserModel.exists({_id:Global.parseJWT("user_token",request.cookies)});
+        if(data){
+          let FilteredData = Global.setObjectKeys(Keys,Global.getRecords(await models.UserModel.findOne(data)));
+          if(FilteredData)
+            response.send(JSON.stringify(FilteredData));
+          else
+            throw new Error('invalid login credential signup first');
+        }else{
+          throw new Error('invalid login credential signup first');
+        }
+      }catch(err){
+        response.status(400).send(JSON.stringify({err_msg:err.message}));
+      }
+    },
+    /**
+    * manages user settings 
+    * @param {express.Request} request 
+    * @param {express.Response} response 
+    */
+    settings:async (request,response) => {
+    } 
   }
 }
 export default ROUTES;

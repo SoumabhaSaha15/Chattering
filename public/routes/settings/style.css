@@ -1,0 +1,46 @@
+body{
+  background-image: url('../../icons/background.jpg');
+  & div#root{
+    min-height: 100lvh;
+    max-height: 100lvh;
+    border-radius: 10px;
+    transform: scale(0.85);
+    background-color: var(--back);
+    backdrop-filter: blur(2px);
+    display: grid;
+    place-items: center;
+    grid-template-rows: 6lvh 88lvh 6lvh;
+    & header{
+      height: 100%;
+      width: 100%;
+      line-height: 6lvh;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text);
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    & main{
+      height: 100%;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      & img{
+        max-height: 50%;
+        max-width: 50%;
+        min-height: 0;
+        min-width: 0;
+      }
+    }
+    & footer{
+      height: 100%;
+      width: 100%;
+      line-height: 6lvh;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text);
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }  
+}

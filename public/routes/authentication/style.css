@@ -26,7 +26,6 @@ body {
       grid-template-rows: calc(80% - 5px) calc(20% - 5px);
       grid-auto-columns: 100%;
       gap:10px;
-      
       background-color: #303030;
       & textarea {
         text-transform: none;
@@ -87,7 +86,7 @@ body {
         align-items: center;
 
         & span.toggle-btn {
-          background-color: var(--back);
+          background-color: var(--back-solid);
           border-radius: 10px;
           height: 8lvh;
           width: 60%;
@@ -101,7 +100,7 @@ body {
           & button {
             height: 100%;
             width: 100%;
-            background-color: var(--fore);
+            background-color: var(--fore-solid);
           }
 
           & button:first-child {

@@ -33,16 +33,22 @@ const __dirname = path.dirname(__filename);
     // })
 
     APP.get('/', routes.GET.home);
+
     APP.get('/authentication', routes.GET.authentication);
     APP.post('/authentication', routes.POST.authentication);
+
     APP.get('/chat',routes.GET.chat);
+    APP.post('/chat',routes.POST.chat);
+
+    APP.get('/settings',routes.GET.settings);
+    APP.post('/settings',routes.POST.settings);
 
     SERVER.listen(process.env.PORT, () => {
       console.log(`http://localhost:${process.env.PORT}`);
     });
   }
   catch(err){
-    console.log(err,44);
+    console.log(err);
   }
 
 })();

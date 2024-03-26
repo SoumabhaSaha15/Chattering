@@ -8,7 +8,7 @@ const UserSchema  = new mongoose.Schema({
     required:true,
     validate:{
       validator:function(v){
-        return /\b[a-zA-Z ]{2,}$\b/.test(v)
+        return /^[a-zA-Z ]{2,}$/.test(v)
       },
       message:(props) => (`${props.value} is not valid user name`)
     }
