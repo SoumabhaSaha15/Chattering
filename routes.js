@@ -119,7 +119,7 @@ const ROUTES = {
       //logout user
       try{
         let body = {...request.body};
-        switch(body['purpops']){
+        switch(body['purpose']){
           case ('logout'):{
             response.clearCookie("user_token");
             response.send({'redirect':'./authentication'});
