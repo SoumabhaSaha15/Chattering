@@ -6,16 +6,24 @@
   <link rel="stylesheet" href="../../styles/universal.css">
   <link rel="stylesheet" href="./routes/settings/style.css">
   <link rel="icon" href="../../icons/chat-icon.svg">
-  <script src="./routes/home/script.js"></script>
+  <script src="./routes/settings/script.js"></script>
   <title>chatt-app</title>
 </head>
 <body>
   <div id="root">
-    <header>wellcome&nbsp;to&nbsp;chattering</header>
+    <header>settings</header>
     <main>
-     <img src="../../icons/chat-icon.svg" alt="icon" />
+      <form >
+        <input type="file" accept=".jpg,.png.,.jpeg" style="display: none;" id="dp"/>
+        <label for="dp">
+          <img src="../../icons/chat-icon.svg" alt="icon"/>
+        </label>
+        <!--  -->
+        <input type="text" name="UserName" style="grid-area: name;">
+        <input type="text" name="Email" style="grid-area: email;">
+      </form>
     </main>
-    <footer>dev:soumabha&nbsp;saha</footer>
+    <footer>dev:soumabha saha</footer>
   </div>
 </body>
 <!-- <script src="/socket.io/socket.io.js"></script> -->

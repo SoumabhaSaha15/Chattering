@@ -1,15 +1,13 @@
-import express, { response } from "express";
+import express from "express";
 import {Server} from 'socket.io';
 import mongoose from "mongoose";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import models from "./models.js";
 import JWT from 'jsonwebtoken'; 
-import dotenv  from "dotenv";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import Global from "./global.js";
-import { request } from "http";
 const ROUTES = {
   GET:{
     /**
@@ -81,7 +79,7 @@ const ROUTES = {
             if(JSON.stringify(FilteredData)==JSON.stringify(Global.setObjectKeys(Keys,Data)))
               response.send(JSON.stringify({'redirect':'./chat'}));
             else
-              throw new Error('invalid login credential signup first');
+              throw new Error('invalid login credential logoutfrom device first');
           }else{
             throw new Error('invalid login credential signup first');
           }
@@ -118,6 +116,25 @@ const ROUTES = {
     * @param {express.Response} response 
     */
     settings:async (request,response) => {
+      //logout user
+      try{
+        let body = {...request.body};
+        switch(body['purpops']){
+          case ('logout'):{
+            response.clearCookie("user_token");
+            response.send({'redirect':'./authentication'});
+          }
+          case ('DP change'):{
+            console.log(body,'line 129');
+            response.send({'redirect':'./settings'});
+          }
+          default:{
+            throw new Error('out of option');   
+          }
+        }
+      }catch(err){
+
+      }
     } 
   }
 }

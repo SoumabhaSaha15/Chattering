@@ -4,43 +4,77 @@ body{
     min-height: 100lvh;
     max-height: 100lvh;
     border-radius: 10px;
-    transform: scale(0.85);
+    transform: scale(0.99);
     background-color: var(--back);
     backdrop-filter: blur(2px);
     display: grid;
     place-items: center;
-    grid-template-rows: 6lvh 88lvh 6lvh;
+    grid-template-rows: 6dvh calc(88dvh - 8px) 6dvh;
+    gap:4px;
+    overflow: hidden;
     & header{
       height: 100%;
       width: 100%;
-      line-height: 6lvh;
+      line-height: 6dvh;
       font-size: 1.5rem;
       font-weight: 900;
       color: var(--text);
       text-overflow: ellipsis;
+      text-align: left !important;
       overflow: hidden;
+      text-align: center;
+      background-color: var(--accent);
+      padding-left:5px;
+      border-radius: 10px;
     }
     & main{
       height: 100%;
       width: 100%;
       display: grid;
       place-items: center;
-      & img{
-        max-height: 50%;
-        max-width: 50%;
-        min-height: 0;
-        min-width: 0;
+      grid-template-columns: 100%;
+      grid-auto-rows: 250px;
+      & form{
+        height: 100%;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        justify-content: space-evenly;
+        grid-template-columns: 250px calc(100% - 250px);
+        grid-auto-rows: 125px;
+        grid-template-areas: 'img email'
+        'img name';
+        & label{
+          max-height: 80%;
+          max-width: 80%;
+          min-height: 0;
+          min-width: 0;
+          grid-area: img;
+          & img{
+            height: 100%;
+            width: 100%;
+          }
+        }
+        & input[type]{
+          position: relative;
+          min-height: 6dvh;
+          width: 80%;
+        }
+        
       }
     }
     & footer{
       height: 100%;
       width: 100%;
-      line-height: 6lvh;
+      line-height: 6dvh;
       font-size: 1.5rem;
       font-weight: 900;
       color: var(--text);
       text-overflow: ellipsis;
       overflow: hidden;
+      overflow: hidden;
+      background-color: var(--accent);
+      border-radius: 10px;
     }
   }  
 }

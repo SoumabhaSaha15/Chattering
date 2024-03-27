@@ -1,3 +1,3 @@
 (()=>{
-  document.querySelector('body div#root header');
+  console.log(window.location);
 })();
