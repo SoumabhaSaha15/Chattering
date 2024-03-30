@@ -51,5 +51,10 @@ const CreateFolder= (name)=>{
     return null;
   }
 }
-
-export default {getRecords,setObjectKeys,parseJWT,CreateFolder};
+/**
+ * 
+ */
+const getDP = id =>(fs.existsSync(`${__dirname}/public/client/${id}/dp.png`))?
+  (`./client/${id}/DP.png`):
+  ('./icons/chat-icon.svg');
+export default {getRecords,setObjectKeys,parseJWT,CreateFolder,getDP};

@@ -11,6 +11,7 @@
       body:(""),
     });
     userData = await userData.json();
+    DP.src = userData?.DP;
     MAIN.innerText = JSON.stringify(userData);
     DP.onclick = (e) =>{
       window.location.pathname = './settings';  

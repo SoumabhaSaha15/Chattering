@@ -65,8 +65,9 @@ body{
           min-height: 6dvh;
           width: 80%;
           font-weight: 700;
+          border-radius: 10px;
         }
-        & input[type="submit"]{
+        & button[type="submit"]{
           position: absolute;
           display: inline-block; 
           z-index: 2; 
@@ -76,6 +77,9 @@ body{
           width: fit-content; 
           min-height: 6dvh;
           padding: 5px;
+          font-weight: 700;
+          min-width: 100px;
+          border-radius: 10px;
           background-color: var(--accent);
         }
       }
@@ -107,7 +111,7 @@ body{
           grid-template-areas: 'img img'
           'name name'
           'email email';
-          & input[type="submit"]{ 
+          & button[type="submit"]{ 
             right: unset;
           }
         }

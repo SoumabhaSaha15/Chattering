@@ -9,6 +9,7 @@ import JWT from 'jsonwebtoken';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import Global from "./global.js";
+import { get } from "https";
 const ROUTES = {
   GET:{
     /**
@@ -105,9 +106,11 @@ const ROUTES = {
       try{
         let data = await models.UserModel.exists({_id:Global.parseJWT("user_token",request.cookies)});
         if(data){
-          let FilteredData = Global.setObjectKeys(Keys,Global.getRecords(await models.UserModel.findOne(data)));
+          let FilteredData = await models.UserModel.findOne(data);
+          let src = Global.getDP(FilteredData['_id']);
+          FilteredData = Global.setObjectKeys(Keys,Global.getRecords(FilteredData));
           if(FilteredData)
-            response.send(JSON.stringify(FilteredData));
+            response.send(JSON.stringify({...FilteredData,DP:src}));
           else
             throw new Error('invalid login credential signup first');
         }else{
@@ -131,9 +134,7 @@ const ROUTES = {
             let data = await models.UserModel.exists({_id:Global.parseJWT("user_token",request.cookies)});
             if(data){
               data = Global.getRecords(await models.UserModel.findOne(data));
-              let src= (fs.existsSync(`${__dirname}/public/client/${data['_id']}/dp.png`))?
-                (`./client/${data['_id']}/dp.png`):
-                ('./icons/chat-icon.svg');
+              let src= Global.getDP(data._id);
               delete data['_id'];
               delete data['__v'];
               response.send({...data,DP:src});
@@ -146,8 +147,10 @@ const ROUTES = {
             response.send({'redirect':'./authentication'});
           }
           case ('DP change'):{
-            request.file.
-            response.send({'redirect':'./settings'});
+            let file = (Array.isArray(request.files?.file))?(request.files?.file[0]):(request.files?.file);
+            fs.writeFileSync(`./public/client/${Global.parseJWT("user_token",request.cookies)}/DP.png`,file.data);
+            file = Global.setObjectKeys(['name','size','mimetype'],file);
+            response.send({...file,'redirect':'./settings'});
           }
           default:{
             throw new Error('out of option');   

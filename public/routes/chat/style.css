@@ -10,22 +10,22 @@ body {
     display: grid;
     place-items: center;
     grid-template-rows: 6dvh 94dvh;
+    grid-template-columns: 100%;
     transform: scale(0.99);
     overflow: hidden;
 
     & header {
-      /* position: relative; */
+      position: relative;
       height: 100%;
       width: 100%;
       line-height: 6dvh;
       font-size: 1.5rem;
       font-weight: 900;
       color: var(--text);
-      text-align: left;
+      /* text-align: left; */
       background-color: var(--accent);
-      transition: transform 0.25s linear;
       border-radius: 10px;
-      padding: 0 0 0 10px;
+      /* padding: 0 0 0 10px; */
       display: grid;
       place-items: center;
       grid-template-columns: calc(100% - 6dvh) 6dvh;
@@ -42,7 +42,13 @@ body {
         min-height: calc(6dvh - 2px);
         max-width: calc(6dvh - 2px);
         object-position: center;
-        object-fit: cover;
+        object-fit: contain;
+        overflow: hidden;
+        border-radius: 50vh;
+      }
+      & img:hover{
+        box-shadow: 2px 2px 4px #00000080,-2px -2px 4px #00000080;
+        transform: rotate(45deg),scale(0.9);
       }
     }
 
@@ -51,7 +57,9 @@ body {
       width: 100%;
       display: grid;
       place-items: center;
-
+      text-align: center;
+      word-break: break-all;
+      grid-template-columns: 100%;
     }
   }
 }
