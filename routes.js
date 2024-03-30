@@ -1,5 +1,6 @@
 import express from "express";
 import {Server} from 'socket.io';
+import fs from 'fs';
 import mongoose from "mongoose";
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -64,8 +65,14 @@ const ROUTES = {
         try{  
           let Document = new models.UserModel(Global.setObjectKeys(Keys,Data));
           let SavedData = JSON.parse(JSON.stringify(await Document.save()));
-          response.cookie("user_token",JWT.sign(SavedData['_id'],process.env.SECRET_KEY),{httpOnly:true});
-          response.send(JSON.stringify({'redirect':'./chat'}));
+          if(!Global.parseJWT("user_token",request.cookies)){
+            response.cookie("user_token",JWT.sign(SavedData['_id'],process.env.SECRET_KEY),{httpOnly:true});
+            Global.CreateFolder(SavedData['_id']);
+            response.send(JSON.stringify({'redirect':'./chat'}));
+          }
+          else{
+            throw new Error('invalid signup credential logout from device first');
+          }
         }catch(err){
           response.status(400).send(JSON.stringify({err_msg:err.message}));
         }  
@@ -79,7 +86,7 @@ const ROUTES = {
             if(JSON.stringify(FilteredData)==JSON.stringify(Global.setObjectKeys(Keys,Data)))
               response.send(JSON.stringify({'redirect':'./chat'}));
             else
-              throw new Error('invalid login credential logoutfrom device first');
+              throw new Error('invalid login credential logout from device first');
           }else{
             throw new Error('invalid login credential signup first');
           }
@@ -120,12 +127,26 @@ const ROUTES = {
       try{
         let body = {...request.body};
         switch(body['purpose']){
+          case ('fetch'):{
+            let data = await models.UserModel.exists({_id:Global.parseJWT("user_token",request.cookies)});
+            if(data){
+              data = Global.getRecords(await models.UserModel.findOne(data));
+              let src= (fs.existsSync(`${__dirname}/public/client/${data['_id']}/dp.png`))?
+                (`./client/${data['_id']}/dp.png`):
+                ('./icons/chat-icon.svg');
+              delete data['_id'];
+              delete data['__v'];
+              response.send({...data,DP:src});
+            }else{
+              response.send({...data,redirect:'./authentication'});
+            }
+          }
           case ('logout'):{
             response.clearCookie("user_token");
             response.send({'redirect':'./authentication'});
           }
           case ('DP change'):{
-            console.log(body,'line 129');
+            request.file.
             response.send({'redirect':'./settings'});
           }
           default:{

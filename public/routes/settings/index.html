@@ -6,21 +6,22 @@
   <link rel="stylesheet" href="../../styles/universal.css">
   <link rel="stylesheet" href="./routes/settings/style.css">
   <link rel="icon" href="../../icons/chat-icon.svg">
-  <script src="./routes/settings/script.js"></script>
+  <script src="./routes/settings/script.js" defer></script>
   <title>chatt-app</title>
 </head>
 <body>
   <div id="root">
     <header>settings</header>
     <main>
-      <form >
-        <input type="file" accept=".jpg,.png.,.jpeg" style="display: none;" id="dp"/>
+      <form name="user-info">
+        <input type="file" name="dp" accept="image/jpeg, image/png, image/jpg" style="display: none;" id="dp" required/>
         <label for="dp">
-          <img src="../../icons/chat-icon.svg" alt="icon"/>
+          <img src="../../icons/chat-icon.svg" alt="dp"/>
         </label>
         <!--  -->
-        <input type="text" name="UserName" style="grid-area: name;">
-        <input type="text" name="Email" style="grid-area: email;">
+        <input type="text" name="UserName" style="grid-area: name;"/>
+        <input type="text" name="Email" style="grid-area: email;" />
+        <input type="submit" value="submit" />
       </form>
     </main>
     <footer>dev:soumabha saha</footer>

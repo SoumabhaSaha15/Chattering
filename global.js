@@ -1,4 +1,9 @@
 import JWT from 'jsonwebtoken';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 /**
  * getrecords filters docs from mongodb
  * @name getRecords
@@ -25,5 +30,26 @@ const setObjectKeys = (keys,data) => {
  * @param {Object} obj 
  * @returns {string}
  */
-const parseJWT = (token,obj) => (JWT.verify(obj[token],process.env.SECRET_KEY));
-export default {getRecords,setObjectKeys,parseJWT}
+const parseJWT = (token,obj) => {
+    try{
+      return (JWT.verify(obj[token],process.env.SECRET_KEY));
+    }catch(err){
+      console.log(err.message);
+      return null;
+    }
+}
+/**
+ * @param {string} name 
+ * @returns {string}
+ */
+const CreateFolder= (name)=>{
+  try{
+    fs.mkdirSync(`${__dirname}/public/client/${name}`);
+    return `${__dirname}/public/client/${name}`;
+  }catch(err){
+    console.log(err.message);
+    return null;
+  }
+}
+
+export default {getRecords,setObjectKeys,parseJWT,CreateFolder};
