@@ -23,16 +23,23 @@ const __dirname = path.dirname(__filename);
     APP.use(express.json());
     APP.use(express.urlencoded({ extended: true }));
     APP.use(CookieParser());
-    APP.use(ExpressFileUpload());
+    APP.use(ExpressFileUpload({limits:{
+      fileSize:1024*1024,
+      files:1
+    }}));
     APP.set('view engine', 'ejs');
     APP.set('views', path.resolve('./views'));
 
-    // IO.on('connection',(socket)=>{
-    //   console.log('new connection established',socket.id);
-    //   socket.on('disconnect',(data)=>{
-    //     console.log('connection closed',socket.id);
-    //   })
-    // })
+    IO.on('connection',(socket)=>{
+      console.log('new connection established',socket.id);
+      socket.on('disconnect',(data)=>{
+        console.log('connection closed',socket.id,data);
+      });
+      socket.on('data',(d)=>{
+        console.log(d);
+      })
+      socket.emit('hello','hello line 41 index.js' + socket.id)
+    });
 
     APP.get('/', routes.GET.home);
 
@@ -49,8 +56,8 @@ const __dirname = path.dirname(__filename);
       console.log(`http://localhost:${process.env.PORT}`);
     });
   }
-  catch(err){
-    console.log(err);
+  catch(error){
+    console.log(error.message);
   }
 
 })();
