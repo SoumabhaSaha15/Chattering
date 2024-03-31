@@ -37,13 +37,14 @@ const __dirname = path.dirname(__filename);
     APP.set('view engine', 'ejs');
     APP.set('views', path.resolve('./views'));
 
+    let user = {};
     IO.on('connection', (socket) => {
-      console.log('new connection established', socket.id);
       socket.on('disconnect', (data) => {
-        console.log('connection closed', socket.id, data);
+        WSE.ON.disconnect.execute(IO,socket,data,user);
       });
-      socket.on(WSE.ON.UserData.name,WSE.ON.UserData.execute);
-      socket.emit('hello', 'hello line 41 index.js' + socket.id);
+      socket.on(WSE.ON.UserData.name,(data)=>{
+        WSE.ON.UserData.execute(IO,socket,data,user);
+      });
     });
 
     APP.get('/', routes.GET.home);

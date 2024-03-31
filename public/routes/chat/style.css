@@ -60,7 +60,27 @@ body {
       place-items: center;
       text-align: center;
       word-break: break-all;
-      grid-template-columns: 100%;
+      grid-template-columns: 300px calc(100% - 300px);
+      grid-auto-rows: 100%;
+      & section{
+        width: 100%;
+        height: 100%;
+        transform: scale(0.99);
+        border-radius: 10px;
+      }
+      & section#chats{
+       background-color: #565656; 
+      }
+      & section#users{
+        background-color: #797979;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-auto-rows: 10vh;
+        place-items: center;
+        & div.users{
+          scale: 0.99;
+        }
+      }
     }
   }
 }
