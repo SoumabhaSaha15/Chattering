@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
  * getrecords filters docs from mongodb
  * @name getRecords
  * @param {*} object 
- * @returns {object}
+ * @returns {object|null}
  */
 const getRecords = (object)=> JSON.parse(JSON.stringify(object));
 /**
@@ -34,7 +34,7 @@ const parseJWT = (token,obj) => {
     try{
       return (JWT.verify(obj[token],process.env.SECRET_KEY));
     }catch(err){
-      console.log(err.message);
+      // console.log(err.message);
       return null;
     }
 }

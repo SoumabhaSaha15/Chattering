@@ -66,19 +66,17 @@ const ROUTES = {
         try{  
           let Document = new models.UserModel(Global.setObjectKeys(Keys,Data));
           let SavedData = JSON.parse(JSON.stringify(await Document.save()));
-          if(!Global.parseJWT("user_token",request.cookies)){
-            response.cookie("user_token",JWT.sign(SavedData['_id'],process.env.SECRET_KEY),{httpOnly:true});
-            Global.CreateFolder(SavedData['_id']);
-            response.send(JSON.stringify({'redirect':'./chat'}));
-          }
-          else{
-            throw new Error('invalid signup credential logout from device first');
-          }
+          response.cookie("user_token",JWT.sign(SavedData['_id'],process.env.SECRET_KEY),{httpOnly:true});
+          Global.CreateFolder(SavedData['_id']);
+          response.send(JSON.stringify({'redirect':'./chat'}));
         }catch(err){
           response.status(400).send(JSON.stringify({err_msg:err.message}));
         }  
       }else if(Data?.Purpose == 'login'){
         try{
+          /**
+           * this data checks cookies info
+           */
           let data = await models.UserModel.exists({_id:Global.parseJWT("user_token",request.cookies)});
           if(data){
             let FilteredData = Global.setObjectKeys(Keys,Global.getRecords(await models.UserModel.findOne(data)));
@@ -89,7 +87,16 @@ const ROUTES = {
             else
               throw new Error('invalid login credential logout from device first');
           }else{
-            throw new Error('invalid login credential signup first');
+            Data.UserName = Data?.UserName.toUpperCase(); 
+            Data = Global.setObjectKeys(Keys,Data);
+            let FindData = await models.UserModel.findOne({...Data});
+            FindData = Global.getRecords(FindData);
+            if(FindData){
+              response.cookie("user_token",JWT.sign(FindData['_id'],process.env.SECRET_KEY),{httpOnly:true});
+              response.send({'redirect':'./chat'});
+            }else{
+              throw new Error('invalid login credential signup first');
+            }
           }
         }catch(err){
           response.status(400).send(JSON.stringify({err_msg:err.message}));
