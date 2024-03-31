@@ -1,7 +1,7 @@
 const EVENTS = {
   ON:{
-    data:{
-      name:'data',
+    UserData:{
+      name:'UserData',
       execute:(data)=>{
         
       }
