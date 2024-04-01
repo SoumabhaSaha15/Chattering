@@ -41,4 +41,20 @@ const UserSchema  = new mongoose.Schema({
 
 const UserModel = mongoose.model('UserModel',UserSchema);
 
-export default {UserSchema,UserModel};
+const MessageSchema = new mongoose.Schema({
+  sender:{
+    type: mongoose.Schema.Types.UUID,
+    require:true
+  },
+  reciever:{
+    type: mongoose.Schema.Types.UUID,
+    require:true
+  },
+  chat:{
+    type:String,
+    require:true
+  }
+});
+
+const MessageModel = mongoose.model('MessageModel',MessageSchema);
+export default {UserSchema,UserModel,MessageModel,MessageSchema};

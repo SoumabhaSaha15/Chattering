@@ -107,7 +107,7 @@ const ROUTES = {
      * @param {express.Response} response 
      */
     chat:async(request,response)=>{
-      let Keys = Object.keys(models.UserSchema.paths).filter((fieldName)=>(fieldName !== '_id' && fieldName !== '__v'));
+      let Keys = Object.keys(models.UserSchema.paths).filter((fieldName)=>(fieldName !== '__v'));
       try{
         let data = await models.UserModel.exists({_id:Global.parseJWT("user_token",request.cookies)});
         if(data){

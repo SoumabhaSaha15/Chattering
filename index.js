@@ -15,6 +15,7 @@ const __dirname = path.dirname(__filename);
 
 (async () => {
   try {
+    console.clear();
     dotenv.config();
     const APP = express();
     const SERVER = HTTP.createServer(APP);
@@ -25,14 +26,13 @@ const __dirname = path.dirname(__filename);
     APP.use(express.json());
     APP.use(express.urlencoded({ extended: true }));
     APP.use(CookieParser());
-    APP.use(ExpressFileUpload(
-      {
-        safeFileNames: true,
-        limits: {
-          fileSize: 1024 * 1024,
-          files: 1
-        }
-      }));
+    APP.use(ExpressFileUpload({
+      safeFileNames: true,
+      limits: {
+        fileSize: 1024 * 1024,
+        files: 1
+      }
+    }));
 
     APP.set('view engine', 'ejs');
     APP.set('views', path.resolve('./views'));
@@ -40,10 +40,10 @@ const __dirname = path.dirname(__filename);
     let user = {};
     IO.on('connection', (socket) => {
       socket.on('disconnect', (data) => {
-        WSE.ON.disconnect.execute(IO,socket,data,user);
+        WSE.ON.disconnect.execute(IO, socket, data, user);
       });
-      socket.on(WSE.ON.UserData.name,(data)=>{
-        WSE.ON.UserData.execute(IO,socket,data,user);
+      socket.on(WSE.ON.UserData.name, (data) => {
+        WSE.ON.UserData.execute(IO, socket, data, user);
       });
     });
 

@@ -1,3 +1,4 @@
+import methods from "../../packages/UserList.js";
 (async () => {
   /**
    * @type {HTMLElement}
@@ -7,6 +8,11 @@
   * @type {HTMLImageElement}
   */
  const DP = document.querySelector('body div#root header img');
+ /**
+  * @type {HTMLElement}
+  */
+ const USERS = document.body.querySelector('div#root main section#users');
+ const CHATS = document.body.querySelector('div#root main section#chats');
  try{
    let userData = await fetch(window.location.pathname,{
      method: "POST",
@@ -19,21 +25,14 @@
      */
     const SOCKET = io();
     let idUser='';
-    SOCKET.on('connect',()=>{
-      idUser = SOCKET.id;
-      let data = {socket_id:SOCKET.id};
-      window.alert(JSON.stringify(data));
-    });
-    SOCKET.on('UserJoined',(d)=>{
-      console.log(d);
-    }); 
-    SOCKET.on('disconnect',(d)=>{
-      console.log('id:'+idUser,d);
-    })
+    SOCKET.on('connect',()=>{idUser = SOCKET.id;});
+    SOCKET.on('UserJoined',(d)=>{console.log(d);}); 
+    SOCKET.on('disconnect',()=>{console.log('id:'+idUser);});
     SOCKET.emit('UserData',userData);
-    SOCKET.on('AllUser',data=>{
-      console.log(data);
-    })
+    SOCKET.on('AllUser',(data)=>{
+      delete data[idUser];
+      USERS.innerHTML = methods.createUserDiv(methods.objectToArray(data));
+    });
     DP.src = userData.DP;
     DP.onclick = (e) => {window.location.pathname = './settings';};
   }catch(err){

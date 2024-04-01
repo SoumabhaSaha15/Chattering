@@ -18,7 +18,8 @@ const EVENTS = {
           all_user[socket.id] = {
             UserName:data['UserName'],
             Email:data['Email'],
-            DP:data['DP']
+            DP:data['DP'],
+            db_id:data['_id']
           }
           io.emit(EVENTS.EMIT.AllUser.name,all_user);
         }
@@ -41,6 +42,9 @@ const EVENTS = {
   },
   EMIT:{
     AllUser:{
+      name:'AllUser'
+    },
+    DisconnectUser:{
       name:'AllUser'
     },
   }

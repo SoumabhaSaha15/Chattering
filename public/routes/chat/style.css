@@ -78,7 +78,35 @@ body {
         grid-auto-rows: 10vh;
         place-items: center;
         & div.users{
-          scale: 0.99;
+          border-radius: 10px;
+          transform: scale(0.95);
+          height: 100%;
+          width: 100%;
+          background-color: var(--accent);
+          display: grid;
+          place-items: center;
+          overflow: hidden;
+          grid-template-columns: 10vh calc(100% - 10vh);
+          grid-auto-rows: 100%;
+          justify-content: space-evenly;
+          & img{
+            transform: scaleX(0.95);
+            border-radius: 10px;
+            max-width: calc(100% - 4px);
+            max-height: calc(100% - 4px);
+            overflow: hidden;
+          }
+          & span{
+            border-radius: 10px;
+            max-width: calc(100% - 4px);
+            max-height: calc(100% - 4px);
+            height: calc(100% - 4px);
+            width: calc(100% - 4px);
+            overflow: hidden;
+            padding: 2px;
+            text-align: left;
+            line-height: 3dvh;
+          }
         }
       }
     }
