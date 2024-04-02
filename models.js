@@ -4,7 +4,6 @@ const UserSchema  = new mongoose.Schema({
   UserName:{
     type:String,
     uppercase:true,
-    true:true,
     required:true,
     validate:{
       validator:function(v){

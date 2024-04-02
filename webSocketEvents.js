@@ -4,6 +4,7 @@ const EVENTS = {
     UserData:{
       name:'UserData',
       /**
+       * emits io alluser
        * @name UserData event  
        * @param {Server} io 
        * @param {Socket} socket 
@@ -28,6 +29,7 @@ const EVENTS = {
     disconnect:{
       name:'disconnect',
       /**
+       * emits io Disconnect user
        * @name disconnect event
        * @param {Server} io 
        * @param {Socket} socket 
@@ -35,8 +37,7 @@ const EVENTS = {
        * @param {Object} 
        */
       execute:(io,socket,data,userData)=>{
-        delete userData[socket.id];
-        io.emit(EVENTS.EMIT.AllUser.name,userData);
+        io.emit(EVENTS.EMIT.DisconnectUser.name,userData);
       }
     }
   },
@@ -45,7 +46,7 @@ const EVENTS = {
       name:'AllUser'
     },
     DisconnectUser:{
-      name:'AllUser'
+      name:'DisconnectUser'
     },
   }
 }

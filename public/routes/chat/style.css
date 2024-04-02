@@ -63,13 +63,78 @@ body {
       grid-template-columns: 300px calc(100% - 300px);
       grid-auto-rows: 100%;
       & section{
-        width: 100%;
-        height: 100%;
-        transform: scale(0.99);
+        height: calc(100% - 4px);
+        width: calc(100% - 4px);
+        max-width: calc(100% - 4px);
+        max-height: calc(100% - 4px);
         border-radius: 10px;
       }
       & section#chats{
-       background-color: #565656; 
+        background-color: #565656;
+        display: grid;
+        place-items: center;
+        justify-content: space-evenly;
+        grid-template-columns: 100%;
+        grid-template-rows: 6dvh calc(100% - 12dvh) 6dvh;
+
+        & header{
+        height: 100%;
+        width: 100%;
+        line-height: 6dvh;
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: var(--text);
+        background-color: var(--accent);
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        grid-template-columns: calc(100% - 6dvh) 6dvh;
+          & span {
+            height: 100%;
+            text-align: left;
+            width: 100%;
+            line-height: 6dvh;
+          }
+    
+          & img {
+            max-height: calc(6dvh - 2px);
+            min-height: calc(6dvh - 2px);
+            max-width: calc(6dvh - 2px);
+            object-position: center;
+            object-fit: contain;
+            overflow: hidden;
+            border-radius: 50vh;
+            background-color: black;
+          }
+        }
+        & div{
+          height: calc(100% - 4px);
+          width: calc(100% - 4px);
+          max-width: calc(100% - 4px);
+          max-height: calc(100% - 4px);
+          border-radius: 10px;
+        } 
+        & div#writemsg{
+          display: grid;
+          place-items: center;
+          justify-content: space-evenly;
+          overflow: hidden;
+          grid-template-columns: calc(100% - 6dvh) 6dvh;
+          grid-auto-rows: 100%;
+          & textarea{
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+          }
+          & button{
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            background-color: var(--back);
+          }
+        }
       }
       & section#users{
         background-color: #797979;
@@ -79,9 +144,10 @@ body {
         place-items: center;
         & div.users{
           border-radius: 10px;
-          transform: scale(0.95);
-          height: 100%;
-          width: 100%;
+          height: calc(100% - 4px);
+          width: calc(100% - 4px);
+          max-width: calc(100% - 4px);
+          max-height: calc(100% - 4px);
           background-color: var(--accent);
           display: grid;
           place-items: center;
@@ -90,8 +156,10 @@ body {
           grid-auto-rows: 100%;
           justify-content: space-evenly;
           & img{
-            transform: scaleX(0.95);
+            transform: scale(0.95);
             border-radius: 10px;
+            height: calc(100% - 4px);
+            width: calc(100% - 4px);
             max-width: calc(100% - 4px);
             max-height: calc(100% - 4px);
             overflow: hidden;

@@ -1,4 +1,4 @@
-const methods={
+const METHODS={
   /**
    * converts Object to array
    * @param {Object} obj 
@@ -40,4 +40,4 @@ const methods={
     }).join('');
   } 
 };
-export default methods;
+export default METHODS;

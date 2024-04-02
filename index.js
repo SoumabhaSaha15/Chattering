@@ -26,24 +26,20 @@ const __dirname = path.dirname(__filename);
     APP.use(express.json());
     APP.use(express.urlencoded({ extended: true }));
     APP.use(CookieParser());
-    APP.use(ExpressFileUpload({
-      safeFileNames: true,
-      limits: {
-        fileSize: 1024 * 1024,
-        files: 1
-      }
-    }));
+    APP.use(ExpressFileUpload({ safeFileNames: true }));
 
     APP.set('view engine', 'ejs');
     APP.set('views', path.resolve('./views'));
 
-    let user = {};
+    //high priority saves user list
+    let USER = {};
     IO.on('connection', (socket) => {
       socket.on('disconnect', (data) => {
-        WSE.ON.disconnect.execute(IO, socket, data, user);
+        delete USER[socket.id];
+        WSE.ON.disconnect.execute(IO, socket, data, {socket_id:socket.id});
       });
       socket.on(WSE.ON.UserData.name, (data) => {
-        WSE.ON.UserData.execute(IO, socket, data, user);
+        WSE.ON.UserData.execute(IO, socket, data, USER);
       });
     });
 
