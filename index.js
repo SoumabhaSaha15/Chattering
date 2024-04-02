@@ -28,10 +28,10 @@ const __dirname = path.dirname(__filename);
     APP.use(CookieParser());
     APP.use(ExpressFileUpload({ safeFileNames: true }));
 
-    APP.set('view engine', 'ejs');
-    APP.set('views', path.resolve('./views'));
-
-    //high priority saves user list
+    /**high priority saves alluser list
+     * @name USER
+     * @type {Object}
+     */
     let USER = {};
     IO.on('connection', (socket) => {
       socket.on('disconnect', (data) => {
