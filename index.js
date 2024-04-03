@@ -28,6 +28,10 @@ const __dirname = path.dirname(__filename);
     APP.use(CookieParser());
     APP.use(ExpressFileUpload({ safeFileNames: true }));
 
+    
+    
+    
+    
     /**high priority saves alluser list
      * @name USER
      * @type {Object}
@@ -38,10 +42,18 @@ const __dirname = path.dirname(__filename);
         delete USER[socket.id];
         WSE.ON.disconnect.execute(IO, socket, data, {socket_id:socket.id});
       });
-      socket.on(WSE.ON.UserData.name, (data) => {
-        WSE.ON.UserData.execute(IO, socket, data, USER);
-      });
+      socket.on(WSE.ON.SendMessage.name,(data)=>{
+        WSE.ON.SendMessage.execute(IO,socket,data);
+      })
+      socket.on(WSE.ON.GetConnectedUser.name,(data)=>{
+        WSE.ON.GetConnectedUser.execute(IO,socket,data);
+        socket.emit(WSE.EMIT.RecieveMessage.name,WSE.EMIT.RecieveMessage.execute());
+      })
     });
+
+
+
+
 
     APP.get('/', routes.GET.home);
 

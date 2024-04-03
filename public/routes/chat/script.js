@@ -26,17 +26,11 @@ import methods from "../../packages/methods.js";
     const SOCKET = io();
     let idUser='';
     SOCKET.on('connect',()=>{idUser = SOCKET.id;});
-
     SOCKET.on('disconnect',()=>{console.log('id:'+idUser);});
-    SOCKET.emit('UserData',userData);
-    SOCKET.on('AllUser',(data)=>{
-      delete data[idUser];
-      USERS.innerHTML = methods.createUserDiv(methods.objectToArray(data));
+    SOCKET.emit('GetConnectedUser',userData['_id']);
+    SOCKET.on('SetConnectedUser',(data)=>{ 
+      USERS.innerHTML = methods.createUserDiv(data);
     });
-    SOCKET.on('DisconnectUser',(data)=>{
-      USERS.removeChild(USERS.querySelector('div#'+data['socket_id']));
-      console.log(data);
-    })
     DP.src = userData.DP;
     DP.onclick = (e) => {window.location.pathname = './settings';};
   }catch(err){

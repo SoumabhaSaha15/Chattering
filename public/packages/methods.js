@@ -28,8 +28,8 @@ const METHODS={
   */
   createUserDiv:(arr)=>{
     return arr.map((item)=>{
-      console.log(item);
-      return `<div id="${item.socket_id}" class="users">
+      // console.log(item);
+      return `<div id="${item['_id']}" class="users">
                 <img src="${item.DP}" alt="${item.Email}"/>
                 <span>
                   ${item.UserName}
