@@ -94,6 +94,9 @@ body {
             text-align: left;
             width: 100%;
             line-height: 6dvh;
+            padding-left: 10px;
+            text-overflow: ellipsis;
+            font-weight: 600;
           }
     
           & img {

@@ -28,8 +28,7 @@ const METHODS={
   */
   createUserDiv:(arr)=>{
     return arr.map((item)=>{
-      // console.log(item);
-      return `<div id="${item['_id']}" class="users">
+      return `<div id="${item['_id']}" class="users" data-user-name="${item.UserName}" data-dp="${item.DP}" data-email="${item.Email}">
                 <img src="${item.DP}" alt="${item.Email}"/>
                 <span>
                   ${item.UserName}
