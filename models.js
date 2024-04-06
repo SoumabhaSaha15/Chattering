@@ -42,11 +42,11 @@ const UserModel = mongoose.model('UserModel',UserSchema);
 
 const MessageSchema = new mongoose.Schema({
   sender:{
-    type: mongoose.Schema.Types.UUID,
+    type: mongoose.Schema.Types.ObjectId,
     require:true
   },
   reciever:{
-    type: mongoose.Schema.Types.UUID,
+    type: mongoose.Schema.Types.ObjectId,
     require:true
   },
   chat:{

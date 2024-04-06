@@ -31,24 +31,35 @@ const __dirname = path.dirname(__filename);
     
     
     
-    
+    /**
+     * @typedef USERS 
+     * @property {string} UserName
+     * @property {string} Email
+     * @property {string} DP0
+     * @property {string} db_id
+     */
     /**high priority saves alluser list
      * @name USER
-     * @type {Object}
+     * @type {Map<string,USERS>}
      */
-    let USER = {};
+    let USER = new Map();
     IO.on('connection', (socket) => {
+      
       socket.on('disconnect', (data) => {
-        delete USER[socket.id];
+        USER.delete(socket.id);
         WSE.ON.disconnect.execute(IO, socket, data, {socket_id:socket.id});
       });
-      socket.on(WSE.ON.SendMessage.name,(data)=>{
-        WSE.ON.SendMessage.execute(IO,socket,data);
+      socket.on(WSE.ON.ClientData.name,data=>{
+        WSE.ON.ClientData.execute(IO,socket,data,USER)
       })
       socket.on(WSE.ON.GetConnectedUser.name,(data)=>{
         WSE.ON.GetConnectedUser.execute(IO,socket,data);
-        socket.emit(WSE.EMIT.RecieveMessage.name,WSE.EMIT.RecieveMessage.execute());
-      })
+      });
+
+      socket.on(WSE.ON.SendMessage.name,(data)=>{
+        WSE.ON.SendMessage.execute(IO,socket,data,USER);
+      });
+
     });
 
 
