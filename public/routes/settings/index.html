@@ -11,7 +11,10 @@
 </head>
 <body>
   <div id="root">
-    <header>settings</header>
+    <header>
+      <span>settings</span>
+      <button>logout</button>
+    </header>
     <main>
       <form name="user-info">
         <input type="file" name="dp" accept="image/jpeg, image/png, image/jpg" style="display: none;" id="dp" required/>
@@ -22,13 +25,8 @@
         <input type="email" name="Email" readonly style="grid-area: email;" />
         <button type="submit">save</button>
       </form>
-      <div>
-        <button>logout</button>
-        <button>theme</button>
-      </div>
     </main>
     <footer>dev:soumabha saha</footer>
   </div>
 </body>
-<!-- <script src="/socket.io/socket.io.js"></script> -->
 </html>

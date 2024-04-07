@@ -10,7 +10,7 @@
   });
   data = await data.json();
   let form = document.querySelector('form[name="user-info"]');
-  form.querySelectorAll('input').forEach(item=>{(data[item.name])?(item.value = data[item.name]):(console.log('undefined'))});
+  // form.querySelectorAll('input').forEach(item=>{(data[item.name])?(item.value = data[item.name]):(console.log('undefined'))});
   // console.log(form)
   let img = form.querySelector('label img');
   /**
@@ -29,6 +29,20 @@
       console.log(err);
     }
   }
+  /**
+   * @type {HTMLButtonElement}
+   */
+  const logout = document.body.querySelector('div#root header button');
+  logout.onclick= async (e) =>{
+    let data = await fetch(window.location.pathname,{
+      method:'post',
+      headers:{ "Content-Type": "application/json" },
+      body:JSON.stringify({"purpose":"logout"}),
+    });
+    data = await data.json();
+    location.pathname = data['redirect'];
+    // console.log(data);
+  };
   form.onsubmit = async (e) => {
     e.preventDefault();
     let FILE_DATA = new FormData();
@@ -39,6 +53,6 @@
       body:FILE_DATA,
     });
     data = await data.json();
-    console.log(data);
+
   }
 })();
